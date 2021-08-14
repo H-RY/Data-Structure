@@ -16,14 +16,18 @@ void traverse_list(PNODE p_head);//遍历
 bool is_empty1(PNODE p_head);//判空
 int length_list(PNODE p_head);//长度
 bool insert_list(PNODE p_head, int pos, int val);//插入
-bool delete_list(PNODE p_head, int pos, int * val);//删除
+bool delete_list(PNODE p_head, int pos, int * p_val);//删除
 void sort_list(PNODE p_head);//排序
 
 int main(void){
     PNODE p_head = NULL;
+    int val;//保存欲删除节点的数据
     p_head = create_list();//创建一个非循环单链表，并将该链表的头结点的地址赋值给 p_head
-//    traverse_list(p_head);
-
+//    length_list(p_head);
+//    sort_list(p_head);
+//    insert_list(p_head,6,99);
+    delete_list(p_head,1,&val);
+    traverse_list(p_head);
     return 0;
 }
 
@@ -83,6 +87,56 @@ int length_list(PNODE p_head){
     return length;
 }
 
+//排序（运用了泛型的思想）
 void sort_list(PNODE p_head){
+    int i,j,t;
+    PNODE p, q;
 
+    for(i = 0, p = p_head->p_next; i< length_list(p_head)-1; i++, p = p->p_next){
+        for(j = i + 1,q = p->p_next;j< length_list(p_head);j++,q = q->p_next){
+            if(p->data > q->data){ //类似于数组中的：a[i] > a[j]
+                t = p->data; //类似于数组中的：t = a[i]
+                p->data = q->data;//类似于数组中的：a[i] = a[j]
+                q->data = t;//类似于数组中的：a[j] = t
+            }
+        }
+    }
+}
+
+//在p_head所指向链表的第pos个节点的前面插入一个新的结点，该节点的值是val，且pos的值从1开始
+bool insert_list(PNODE p_head, int pos, int val){
+    int i;
+    PNODE p = p_head;
+    for (i = 0; i<pos-1&&NULL != p;i++){
+        p = p->p_next;
+    }
+    if (i>pos-1 || NULL == p)
+        return false;
+
+    PNODE p_new = new Node;
+    if (NULL == p_new){
+        cout<<"error"<<endl;
+        exit(-1);
+    }
+    p_new->data = val;
+    p_new->p_next = p->p_next;
+    p->p_next = p_new;
+    return true;
+}
+//删除p_head所指向链表的第pos个节点，该节点的值是val，且pos的值从1开始
+//看懂删除和插入的关键是删除时默认头结点不可删除
+//插入时默认插在当前p所指的节点的后面（可插在头结点后）
+bool delete_list(PNODE p_head, int pos, int * p_val){
+    int i;
+    PNODE p = p_head;
+    for (i = 0; i<pos-1&&NULL != p->p_next;i++){
+        p = p->p_next;
+    }
+    if (i>pos-1 || NULL == p->p_next)
+        return false;
+    PNODE q = p->p_next;
+    *p_val = q->data;
+    p->p_next = p->p_next->p_next;
+    free(q);
+    return true;
 }
