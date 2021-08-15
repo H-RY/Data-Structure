@@ -1,7 +1,7 @@
 //
 // Created by Administrator on 2021/8/14.
 //
-
+//链栈
 #include <iostream>
 using namespace std;
 typedef struct Node{
