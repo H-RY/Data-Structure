@@ -17,6 +17,8 @@ bool is_empty1(PNODE p_head);//判空
 int length_list(PNODE p_head);//长度
 bool insert_list(PNODE p_head, int pos, int val);//插入
 bool delete_list(PNODE p_head, int pos, int * p_val);//删除
+PNODE get_node_val(PNODE p_head, int pos);//按序号查找结点值
+PNODE get_node(PNODE p_head, int val);//按值查找表结点
 void sort_list(PNODE p_head);//排序
 
 int main(void){
@@ -27,6 +29,8 @@ int main(void){
 //    sort_list(p_head);
 //    insert_list(p_head,6,99);
 //    delete_list(p_head,1,&val);
+//    cout << get_node_val(p_head,4)->data;
+//    cout << get_node(p_head,5);
     traverse_list(p_head);
     return 0;
 }
@@ -186,4 +190,29 @@ bool delete_list(PNODE p_head, int pos, int * p_val){
     p->p_next = p->p_next->p_next;
     free(q);
     return true;
+}
+
+//按序号查找结点的值
+PNODE get_node_val(PNODE p_head, int pos){
+    int i = 1;//记录查找的次数
+    PNODE p_tar = p_head->p_next;//头结点指针赋给 P_tar;
+    if (pos == 0)
+        return p_head;
+    if (pos < 0){
+       return NULL;
+    }
+    while (p_tar && i < pos){
+        p_tar = p_tar->p_next;
+        i++;
+    }
+    return p_tar;//返回第 pos 个结点的指针，若 pos 大于表长 则返回NULL
+}
+
+//按值查找表结点
+PNODE get_node(PNODE p_head, int val){
+    PNODE p = p_head->p_next;
+    while (p != NULL && p->data != val){
+        p = p->p_next;
+    }
+    return p;//找到后返回该结点指针，否则返回NULL
 }
