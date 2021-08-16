@@ -26,41 +26,88 @@ int main(void){
 //    length_list(p_head);
 //    sort_list(p_head);
 //    insert_list(p_head,6,99);
-    delete_list(p_head,1,&val);
+//    delete_list(p_head,1,&val);
     traverse_list(p_head);
     return 0;
 }
 
+//尾插法建立单链表
 PNODE create_list(){
-    int len;//用来存放有效节点的个数
-    int val;//用来临时存放用户输入节点的值
-
-    //分配了一个不存放有效数据的头结点
-    PNODE p_head = new NODE;
-    p_head->p_next = NULL;
-    if(NULL == p_head){
-        cout<<"error"<<endl;
-        exit(-1);
-    }
-
-    cout<<"len = ";
-    cin>>len;
-
-    for(int i = 0; i<len; i++){
-        cout<<"input the value of point: ";
-        cin>>val;
-
+    int val;
+    PNODE p_head = new NODE;//头结点
+    PNODE r = new NODE;//尾指针
+    r = p_head;//让尾指针指向当前最后一个结点 目前单链表为空 所以尾指针指向头结点
+    cout<<"(when you input '9999', the linklist created.)"<<endl;
+    cout<<"Please input the point of value: ";
+    cin>>val;
+    while(val != 9999){
         PNODE p_new = new NODE;
-        if(NULL == p_new){
-            cout<<"error"<<endl;
-            exit(-1);
-        }
         p_new->data = val;
-        p_new->p_next = p_head->p_next;
-        p_head->p_next = p_new;
+        r->p_next = p_new;
+        r = p_new;
+        cout<<"Please input the point of value: ";
+        cin>>val;
     }
+    r->p_next = NULL;
     return p_head;
 }
+
+
+////另一种头插法建立单链表
+//PNODE create_list(){
+//    int val;
+//    PNODE p_head = new NODE;//创建头结点
+//    p_head->p_next = NULL;
+//    if(NULL == p_head){
+//        cout<<"error"<<endl;
+//        exit(-1);
+//    }
+//    cout<<"(when you input '9999', the linklist created.)"<<endl;
+//    cout<<"Please input the point of value: ";
+//    cin>>val;
+//    while(val != 9999){
+//        PNODE p_new = new NODE;
+//        p_new->data = val;
+//        p_new->p_next = p_head->p_next;
+//        p_head->p_next = p_new;
+//        cout<<"Please input the point of value: ";
+//        cin>>val;
+//    }
+//    return p_head;
+//}
+
+
+////头插法建立单链表
+//PNODE create_list(){
+//    int len;//用来存放有效节点的个数
+//    int val;//用来临时存放用户输入节点的值
+//
+//    //分配了一个不存放有效数据的头结点
+//    PNODE p_head = new NODE;
+//    p_head->p_next = NULL;
+//    if(NULL == p_head){
+//        cout<<"error"<<endl;
+//        exit(-1);
+//    }
+//
+//    cout<<"len = ";
+//    cin>>len;
+//
+//    for(int i = 0; i<len; i++){
+//        cout<<"input the value of point: ";
+//        cin>>val;
+//
+//        PNODE p_new = new NODE;
+//        if(NULL == p_new){
+//            cout<<"error"<<endl;
+//            exit(-1);
+//        }
+//        p_new->data = val;
+//        p_new->p_next = p_head->p_next;
+//        p_head->p_next = p_new;
+//    }
+//    return p_head;
+//}
 
 void traverse_list(PNODE p_head){
     PNODE p = p_head->p_next;
