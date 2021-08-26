@@ -20,3 +20,8 @@ add_executable(link_binary_tree Tree/link_binary_tree.cpp)
 #add_executable(thread_binary_tree Tree/thread _binary_tree.cpp)
 
 add_executable(find Find/find.cpp)
+
+add_executable(insert_sort Sort/insert_sort.cpp)
+add_executable(exchange_sort Sort/exchange_sort.cpp)
+add_executable(choose_sort Sort/choose_sort.cpp)
+add_executable(merge_sort Sort/merge_sort.cpp)
